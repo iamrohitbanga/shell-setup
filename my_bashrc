@@ -51,13 +51,53 @@ fi
 
 unset color_prompt force_color_prompt
 
+# https://stackoverflow.com/a/8428363/161628
+# https://seasonofcode.com/posts/shortening-paths-in-the-bash-prompt-with-prompt_dirtrim.html
+export PROMPT_DIRTRIM=2
+alias vi="vim"
+
+# https://unix.stackexchange.com/questions/124407/what-color-codes-can-i-use-in-my-ps1-prompt
+function colorgrid( )
+{
+    iter=16
+    while [ $iter -lt 52 ]
+    do
+        second=$[$iter+36]
+        third=$[$second+36]
+        four=$[$third+36]
+        five=$[$four+36]
+        six=$[$five+36]
+        seven=$[$six+36]
+        if [ $seven -gt 250 ];then seven=$[$seven-251]; fi
+
+        echo -en "\033[38;5;$(echo $iter)m█ "
+        printf "%03d" $iter
+        echo -en "   \033[38;5;$(echo $second)m█ "
+        printf "%03d" $second
+        echo -en "   \033[38;5;$(echo $third)m█ "
+        printf "%03d" $third
+        echo -en "   \033[38;5;$(echo $four)m█ "
+        printf "%03d" $four
+        echo -en "   \033[38;5;$(echo $five)m█ "
+        printf "%03d" $five
+        echo -en "   \033[38;5;$(echo $six)m█ "
+        printf "%03d" $six
+        echo -en "   \033[38;5;$(echo $seven)m█ "
+        printf "%03d" $seven
+
+        iter=$[$iter+1]
+        printf '\r\n'
+    done
+}
+
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
 xterm*|rxvt*)
     # https://www.cyberciti.biz/faq/bash-shell-change-the-color-of-my-shell-prompt-under-linux-or-unix/
     # https://unix.stackexchange.com/a/285956/1044
-    color="\[\033[01;38;5;214m\]"
-    PS1="$color(\t) \h\e[m % "
+    color1="\[\033[00;38;5;214m\]"
+    color2="\[\033[00;38;5;002m\]"
+    PS1="$color1(\t)\h $color2 \w\e[m % "
     ;;
 *)
     ;;
@@ -101,3 +141,17 @@ fi
 source /usr/local/share/chruby/chruby.sh
 chruby ruby-2.5
 
+
+# Base16 Shell
+# install base16 shell
+# 1. git clone https://github.com/chriskempson/base16-shell.git ~/.config/base16-shell
+# 2. git clone https://github.com/aaron-williamson/base16-gnome-terminal.git ~/.config/base16-gnome-terminal
+
+BASE16_COLOR_SCHEME="$HOME/.config/base16-shell/scripts/base16-bright.sh"
+[[ -s $BASE16_COLOR_SCHEME ]] && source $BASE16_COLOR_SCHEME
+
+
+#BASE16_SHELL="$HOME/.config/base16-shell/"
+#[ -n "$PS1" ] && \
+#    [ -s "$BASE16_SHELL/profile_helper.sh" ] && \
+#        eval "$("$BASE16_SHELL/profile_helper.sh")"
