@@ -1,0 +1,14 @@
+sudo apt-get install
+
+* colortest-256
+
+* vim
+
+* gcc
+
+* g++
+
+* ruby
+
+
+
