@@ -141,6 +141,7 @@ fi
 source /usr/local/share/chruby/chruby.sh
 chruby ruby-2.5
 
+xset r rate 150 100
 
 # Base16 Shell
 # install base16 shell
